@@ -1,6 +1,6 @@
 ############################################################################
 #
-#   Copyright (c) 2018 PX4 Development Team. All rights reserved.
+#   Copyright (c) 2024 PX4 Development Team. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -31,9 +31,22 @@
 #
 ############################################################################
 
-px4_add_library(FlightTaskManualPositionSmoothVel
-	FlightTaskManualPositionSmoothVel.cpp
+px4_add_library(drivers_board
+	i2c.cpp
+	init.c
+	sdhc.c
+	spi.cpp
+	timer_config.cpp
+	tropic_led_pwm.cpp
+	usb.c
+	imxrt_flexspi_nor_boot.c
+	imxrt_flexspi_nor_flash.c
 )
 
-target_link_libraries(FlightTaskManualPositionSmoothVel PUBLIC FlightTaskManualPosition FlightTaskUtility)
-target_include_directories(FlightTaskManualPositionSmoothVel PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+target_link_libraries(drivers_board
+	PRIVATE
+		nuttx_arch # sdio
+		nuttx_drivers # sdio
+		px4_layer
+)
